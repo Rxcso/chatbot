@@ -1,21 +1,30 @@
-import pickle,random
-a=open('lexicon-luke','rb')
-successorlist=pickle.load(a)
+import pickle
+import random
+import sys
+
+a = open('lexicon-luke','rb')
+successorlist = pickle.load(a)
 a.close()
+
+
 def nextword(a):
     if a in successorlist:
-        return random.choice(successorlist[a])
+        try:
+            return random.choice(successorlist[a])
+        except:
+            return ''
     else:
-        return 'the'
-speech=''
-while speech!='quit':
-    speech=raw_input('>')
-    s=random.choice(speech.split())
-    response=''
+        return 'el'
+
+speech = ''
+while speech != 'quit':
+    speech = raw_input('>')
+    s = random.choice(speech.split())
+    response = ''
     while True:
-        neword=nextword(s)
-        response+=' '+neword
-        s=neword
-        if neword[-1] in ',?!.':
+        neword = nextword(s)
+        response += ' ' + neword
+        s = neword
+        if len(response) > 100:
             break
     print response
