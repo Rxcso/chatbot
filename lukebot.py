@@ -7,7 +7,7 @@ a = open('lexicon-luke','rb')
 successorlist = pickle.load(a)
 a.close()
 
-avoid = ["en", "el", "que", "la", "del", "esta", "de", "su", "con"]
+avoid = ["a", "en", "el", "que", "la", "del", "esta", "de", "su", "con"]
 
 def nextword(a):
     if a in successorlist:
