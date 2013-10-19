@@ -7,7 +7,7 @@ a = open('lexicon-luke','rb')
 successorlist = pickle.load(a)
 a.close()
 
-avoid = ["que", "la", "del", "esta", "de", "su", "con"]
+avoid = ["en", "el", "que", "la", "del", "esta", "de", "su", "con"]
 
 def nextword(a):
     if a in successorlist:
@@ -18,21 +18,27 @@ def nextword(a):
     else:
         return 'de'
 
-speech = ''
-while speech != 'quit':
-    speech = raw_input('>')
-    s = random.choice(speech.split())
+def get_response(input):
     response = ''
+    s = random.choice(input.split())
     while True:
         neword = nextword(s)
         if neword != '':
-            response += ' ' + neword
+            response += neword + ' '
         s = neword
-        if len(response) > 100:
+        if len(response) > 120:
             for i in avoid:
-                regex = re.compile('%s\s*$'%i, re.I)
+                regex = re.compile('\s%s\s*$'%i, re.I)
                 if regex.search(response):
                     response = regex.sub("", response).strip()
                     
             break
-    print response
+    return response.strip()
+
+
+if __name__ == "__main__":
+    speech = ''
+    while speech != 'quit':
+        speech = raw_input('>')
+        response = get_response(speech)
+        print response
