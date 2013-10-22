@@ -16,7 +16,7 @@ def nextword(a):
         except:
             return ''
     else:
-        return 'de'
+        return random.choice(avoid)
 
 def get_response(input):
     response = ''
