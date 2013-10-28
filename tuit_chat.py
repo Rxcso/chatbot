@@ -21,6 +21,10 @@ cmd2 = '/usr/local/bin/t set active AniversarioPeru'
 p = subprocess.check_call(cmd2, shell=True);
 
 def get_mentions():
+    if debug:
+        cmd = "cat debug_tuits.txt | grep -i " + user + " | head -n 1"
+        p = subprocess.check_output(cmd, shell=True);
+    else:
         cmd = "/usr/local/bin/t mentions -l -c"
         p = subprocess.check_output(cmd, shell=True);
         f = open(mentions_file, "w")
@@ -32,7 +36,7 @@ def get_last_tuit(user):
         cmd = "cat debug_tuits.txt | grep -i " + user + " | head -n 1"
         p = subprocess.check_output(cmd, shell=True);
     else:
-        cmd = "cat " + mentions_file + " | grep -i " + user + " | head -n 1"
+        cmd = "cat " + mentions_file + " | grep -i " + user + " | awk -F ',' '{if($3 == \"" + user + "\") print $0}' | head -n 1"
         p = subprocess.check_output(cmd, shell=True);
     if len(p) > 0:
         p_ = p.split(",")
